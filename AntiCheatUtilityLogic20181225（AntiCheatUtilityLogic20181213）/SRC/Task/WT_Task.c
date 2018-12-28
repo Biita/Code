@@ -699,7 +699,7 @@ void  TaskRec1(void *tdata)
 				   (l_pZtInf.m_ucTouch<HideZTNUM) && l_u8PostZTFlag && g_Setup.an8ZTStatus[l_pZtInf.m_ucTouch] == 1)//判断窄条位置，如果是正常车道窄条进入下面逻辑，压缝窄条编号在所有正常车道窄条编号后面
 				{	
 					/**** 调试代码 ****/
-					if(l_pZtInf.m_ucTouch == 9)
+					if(l_pZtInf.m_ucTouch == 4)
 					{
 						l_u8cnt1++;
 						if(l_u8cnt1 == 4)
