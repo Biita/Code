@@ -1,0 +1,5 @@
+-c --cpu ARM926EJ-S -g -O0 --apcs=interwork -I..\SRC\SYSTEM -I..\SRC\OS -I..\SRC\TASK -I..\SRC\AppDriver -I..\SRC\SDCard -I..\SRC\LCD -I..\SRC\UI -I..\SRC\Protocol 
+-I C:\Keil\ARM\RV31\INC 
+-I C:\Keil\ARM\CMSIS\Include 
+-I C:\Keil\ARM\Inc\Philips 
+-DUSEMODE -DPUBMODE -D__STRG_NOR -D__STRG_SD -D__UCOS -D__STRG_NAND -o "..\OBJ\timer1.o" --omf_browse "..\OBJ\timer1.crf" --depend "..\OBJ\timer1.d" "..\SRC\AppDriver\Timer1.c"

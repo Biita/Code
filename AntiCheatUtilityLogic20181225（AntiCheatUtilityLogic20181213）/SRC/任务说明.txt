@@ -1,0 +1,30 @@
+非现场执法ARM程序Task1-Task7和FPGA中断功能说明
+
+非现场执法系统ARM是核心控制器。Task1-Task7功能为：
+Task1负责处理逻辑分车抛轴，并且控制抓拍车尾；
+Task2负责维护网络连接设置、更新零点和刷新屏幕；
+Task3负责维护键盘功能；
+Task4负责维护车辆信息，包括计算轴组类型等；
+Task6负责根据Task1上报的轴信息，计算轴重并交给系统；
+Task7负责将车辆信息上传给上位机。
+TaskWave负责接收FPGA传来的波形数据
+Task_Laser_Interact负责处理激光模块发送的数据，包括被动应答数据和主动上传过的数据；
+
+七个任务之间耦合性很小，基本做到了数据独立，通过信号量和消息队列互相传递信息。
+
+对于每个任务的全局变量，在JZGLOBAL.H中非常明确的描述，此处不再赘述。
+ARM与FPGA之间的数据交换是通过FPGA给ARM中断，ARM响应该中断并查询该中断的具体事件，引发ARM调用不同的函数处理该中断。这一工作在Void IRQ_FPGA(void)函数中被完成。该函数主要功能：
+Switch(l_u8FrameTyle)
+{
+		Case 起始结束帧
+Case 起始帧
+Case	 中间帧
+Case 结束帧
+}
+在Switch中完成了
+1.零点和增益；
+g_ChlData[l_u16TriggerID].u16ptMaxValue = (g_ChlData[l_u16TriggerID].u16ptMaxValue-g_Setup.an32Zero[l_u16ID])*g_Setup.an32AxGain[l_u16ID]/1000;
+			g_ChlData[l_u16TriggerID].u32chlSum = (g_ChlData[l_u16TriggerID].u32chlSum-g_Setup.an
+2.抛窄条给逻辑；
+	ret = OSQPost(g_pQDnMsg,&g_ChlData[l_u16TriggerID]);
+ 
